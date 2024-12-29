@@ -1,8 +1,13 @@
+import math
+
 import torch
 import numpy as np
 
-a = torch.tensor([[2., 1.],
-                  [2., 1.]])
-b = torch.tensor([[[1, 2], [2, 3]],
-                   [[2, 3], [3, 4]]])
-print(a.unsqueeze(2) * b)
+def g(particles):
+    return 2 * particles[:, 0] - particles[:, 1]
+
+a = torch.tensor([[-2., 1.],
+                  [-2., 1.]], requires_grad=True)
+b = torch.log(torch.clip(a, min=1))
+print(b.sum())
+print(torch.autograd.grad(b.sum(), a))

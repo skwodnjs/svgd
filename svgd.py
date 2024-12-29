@@ -3,7 +3,6 @@ import math
 import numpy as np
 import torch
 import torch.nn as nn
-import time
 
 class SVGD(nn.Module):
     def __init__(self, log_p, stepsize=1e-1, alpha = 20., M = 1000):
@@ -33,7 +32,6 @@ class SVGD(nn.Module):
         return kernel_matrix, kernel_matrix_grad
 
     def svgd_get_gradient(self, log_p, particles):
-        start = time.time()
         n = particles.size(0)  # number of parcitles
         particles = particles.detach().requires_grad_(True)
 
@@ -41,8 +39,6 @@ class SVGD(nn.Module):
         log_prob_grad = torch.autograd.grad(log_prob.sum(), particles, allow_unused=True, retain_graph=True)[0]  # n x dim
 
         kernel_matrix, kernel_matrix_grad = self.kernel(particles)
-
-        svgd_gradient = torch.zeros_like(particles, device=particles.device)
 
         term1 = torch.einsum("ij,ik->jk", kernel_matrix, log_prob_grad)
         term2 = kernel_matrix_grad.sum(dim=1)
