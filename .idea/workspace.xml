@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e998009-2be7-4d83-b846-2a4ed7e24337" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main_o_svgd.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/svgd_barrier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_o_svgd.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main_svgd.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_svgd.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_svgd_barrier.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_svgd_barrier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/o_svgd.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/o_svgd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svgd.gif" beforeDir="false" afterPath="$PROJECT_DIR$/animation/svgd.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svgd.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/svgd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svgd_barrier_.0e-2.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/svgd_barrier_10.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/o_svgd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,12 +34,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "Python.main.executor": "Run",
     "Python.main_o_svgd.executor": "Run",
     "Python.main_svgd.executor": "Run",
     "Python.main_svgd_barrier.executor": "Run",
     "Python.main_svgd_interior_method.executor": "Run",
     "Python.svgd.executor": "Run",
+    "Python.svgd_barrier.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",

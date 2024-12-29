@@ -40,7 +40,7 @@ def main(x0, sampler, max_iter, save=False):
     bound_y = 10
 
     ## plot setting
-    fig, ax = plt.subplots(figsize=(8, 8))
+    fig, ax = plt.subplots(figsize=(7, 7))
     ax.axis([-bound_x, bound_x, -bound_y, bound_y])
     ax.set_aspect('equal')
     ax.grid(True)
@@ -76,7 +76,7 @@ def main(x0, sampler, max_iter, save=False):
     best = best_particle(x)
     best_particle_time = time.time() - start
     print(f'best particles: ({best[0]:.7f}, {best[1]:.7f}) \t time: {best_particle_time:.7f}')
-    print(f'f(x): { - log_p(best[None, :])[0]}')
+    print(f'f(x): { f(best[None, :])[0]}')
 
     result = f'runtime: {total_time:.4f} sec  /  best particles: ( {best[0]:.4f}, {best[1]:.4f} )  /  f(x): { - f(best[None, :])[0]:.7f}'
     plt.figtext(0.5, 0.01, result, ha="center", fontsize=10)
@@ -97,5 +97,5 @@ if __name__ == "__main__":
     sampler = SVGD(log_p, stepsize=0.5, alpha = 100)
     max_iter = 500
 
-    save = True
+    save = False
     main(x0, sampler, max_iter, save=save)
