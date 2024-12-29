@@ -11,14 +11,10 @@ from draw import plot_2d_contour
 from svgd import SVGD
 
 # Problem statement:
-# \min_{x \in \mathbb{R}^2} f(x) = (x_1 - 2)^2 + (x_2 - 3)^2
-# text{s.t} \quad g(x) = (x_1 - 2)^2 - x_2 - 1 = 0
+# \min_{x \in \mathbb{R}^2} f(x) = (\sqrt{\frac{x_1^2}{3} + \frac{x_2^2}{2}} - 3)^2
 
 def log_p(particles):
-    return - (particles[:, 0] - 2) ** 2 - (particles[:, 1] - 3) ** 2
-
-def g(x):
-    return (x[:,0] - 2) ** 2 - x[:,1] - 1
+    return - ((particles[:, 0] ** 2 / 3 + particles[:, 1] ** 2 / 2) ** 1/2 - 3) ** 2
 
 def best_particle(particles):
     """
@@ -150,8 +146,9 @@ def main_show(x0, sampler, max_iter):
     best = best_particle(x)
     best_particle_time = time.time() - start
     print(f'best particles: ({best[0]:.7f}, {best[1]:.7f}) \t time: {best_particle_time:.7f}')
+    print(f'f(x): { - log_p(best[None, :])[0]}')
 
-    ani = ArtistAnimation(fig, artists, interval= 100, repeat=True)
+    ani = ArtistAnimation(fig, artists, interval= 10, repeat=True)
     plt.show()
 
 if __name__ == "__main__":
@@ -160,16 +157,16 @@ if __name__ == "__main__":
     # torch.manual_seed(seed)
 
     dim = 2
-    NUM_PARTICLES = 100
+    NUM_PARTICLES = 200
 
     x0 = torch.zeros(NUM_PARTICLES, dim, requires_grad=False)
     x0[:,0] = torch.randn(NUM_PARTICLES, requires_grad=False) * 5
     x0[:,1] = torch.randn(NUM_PARTICLES, requires_grad=False) * 5
 
     sampler = SVGD(log_p, stepsize=0.5, alpha = 100)
-    max_iter = 300
+    max_iter = 500
 
-    save = True
+    save = False
     if save:
         main_save(x0, sampler, max_iter)
     else:

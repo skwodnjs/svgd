@@ -44,7 +44,7 @@ class SVGD(nn.Module):
 
         svgd_gradient = torch.zeros_like(particles, device=particles.device)
 
-        term1 = torch.einsum("ij,jd->id", kernel_matrix, log_prob_grad)
+        term1 = torch.einsum("ij,ik->jk", kernel_matrix, log_prob_grad)
         term2 = kernel_matrix_grad.sum(dim=1)
 
         svgd_gradient = (term1 + term2) / n
