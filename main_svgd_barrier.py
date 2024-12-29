@@ -1,29 +1,26 @@
 import numpy as np
 import torch
 import time
-import os
-from PIL import Image
 from matplotlib import pyplot as plt
 from matplotlib.animation import ArtistAnimation
 from scipy.stats import gaussian_kde
 
 from draw import plot_2d_contour
-from svgd import SVGD
+from model.svgd import SVGD
 
 # min f(x) subj to g(x) >= 0
 
 def f(particles):
-    # return ((particles[:, 0] ** 2 / 3 + particles[:, 1] ** 2 / 2) ** 1/2 - 3) ** 2
-    return particles[:, 0] ** 2 / 2 + particles[:, 1] ** 2 / 3
+    return 1 / 2 * (particles[:, 0] ** 2 + particles[:, 1] ** 2)
 
 def g(particles):
-    return 2 * particles[:, 0] - particles[:, 1]
+    return particles[:, 1]
 
 def log_p(particles):
     if type(particles) == torch.Tensor:
-        return - f(particles) - .0e-2 * torch.log(g(particles))
+        return - f(particles) - 1 * torch.log(particles[:, 1])
     else:
-        return - f(particles) - .0e-2 * np.log(g(particles))
+        return - f(particles) - 1 * np.log(particles[:, 1])
 
 def best_particle(particles):
     """
@@ -94,19 +91,20 @@ def main(x0, sampler, max_iter, save=False):
 
     ani = ArtistAnimation(fig, artists, interval= 10, repeat=True)
     if save:
-        ani.save('animation.gif', writer='pillow')
+        ani.save('animation/animation.gif', writer='pillow')
     plt.show()
 
 if __name__ == "__main__":
     dim = 2
-    NUM_PARTICLES = 100
+    NUM_PARTICLES = 50
 
     x0 = torch.zeros(NUM_PARTICLES, dim, requires_grad=False)
-    x0[:,0] = torch.randn(NUM_PARTICLES, requires_grad=False) * 5
-    x0[:,1] = torch.randn(NUM_PARTICLES, requires_grad=False) * 5
+    x0[:,0] = torch.randn(NUM_PARTICLES, requires_grad=False)
+    x0[:,1] = torch.randn(NUM_PARTICLES, requires_grad=False) + 3
+    x0[:, 1] = torch.where(x0[:, 1] < 0, - x0[:, 1] + 1, x0[:, 1])
 
-    sampler = SVGD(log_p, stepsize=0.5, alpha = 100)
-    max_iter = 500
+    sampler = SVGD(log_p, stepsize=0.01, alpha = 100)
+    max_iter = 1000
 
     save = True
     main(x0, sampler, max_iter, save=save)

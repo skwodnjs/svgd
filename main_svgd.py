@@ -1,20 +1,17 @@
 import numpy as np
 import torch
 import time
-import os
-from PIL import Image
 from matplotlib import pyplot as plt
-from matplotlib.animation import ArtistAnimation, PillowWriter
+from matplotlib.animation import ArtistAnimation
 from scipy.stats import gaussian_kde
 
 from draw import plot_2d_contour
-from svgd import SVGD
+from model.svgd import SVGD
 
 # min f(x)
 
 def f(particles):
-    # return ((particles[:, 0] ** 2 / 3 + particles[:, 1] ** 2 / 2) ** 1/2 - 3) ** 2
-    return particles[:, 0] ** 2 / 2 + particles[:, 1] ** 2 / 3
+    return 1 / 2 * (particles[:, 0] ** 2 + particles[:, 1] ** 2)
 
 def log_p(particles):
     return - f(particles)
@@ -86,7 +83,7 @@ def main(x0, sampler, max_iter, save=False):
 
     ani = ArtistAnimation(fig, artists, interval= 10, repeat=True)
     if save:
-        ani.save('animation.gif', writer='pillow')
+        ani.save('animation/animation.gif', writer='pillow')
     plt.show()
 
 if __name__ == "__main__":
@@ -100,5 +97,5 @@ if __name__ == "__main__":
     sampler = SVGD(log_p, stepsize=0.5, alpha = 100)
     max_iter = 500
 
-    save = False
+    save = True
     main(x0, sampler, max_iter, save=save)
