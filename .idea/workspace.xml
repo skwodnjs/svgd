@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e998009-2be7-4d83-b846-2a4ed7e24337" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animation/svgd_barrier.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_svgd.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_svgd.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_svgd_barrier.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_svgd_barrier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/svgd_barrier.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/svgd_barrier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
@@ -31,22 +28,22 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "Python.main.executor": "Run",
-    "Python.main_o_svgd.executor": "Run",
-    "Python.main_svgd.executor": "Run",
-    "Python.main_svgd_barrier.executor": "Run",
-    "Python.main_svgd_interior_method.executor": "Run",
-    "Python.svgd.executor": "Run",
-    "Python.svgd_barrier.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/JWN/OCP/SVGD/svgd"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_o_svgd.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_svgd.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_svgd_barrier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_svgd_interior_method.executor&quot;: &quot;Run&quot;,
+    &quot;Python.svgd.executor&quot;: &quot;Run&quot;,
+    &quot;Python.svgd_barrier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/JWN/OCP/SVGD/svgd&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\JWN\OCP\SVGD\svgd" />

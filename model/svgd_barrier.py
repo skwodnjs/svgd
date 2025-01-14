@@ -15,14 +15,20 @@ class SVGD_Barrier(nn.Module):
         self.iter = iter
 
     def step(self, particle, gamma):
-        grad = self.svgd_get_gradient(lambda particles: self.log_p(particles) + gamma * torch.log(self.g(particles)), particle)
+        grad = self.svgd_get_gradient(lambda particles: self.log_p(particles) + gamma * sum(torch.log(g(particles)) for g in self.g), particle)
         dx = grad.detach().clone() * self.stepsize
         new_data = particle.data + torch.clip(dx, -self.M * gamma, self.M * gamma)  ### negative sign for constraint SVGD
         for i in range(len(new_data)):
-            if self.g(new_data[i].unsqueeze(0)) > - 0.01 / gamma or i > self.iter:
+            if any(g(new_data[i].unsqueeze(0)) > -1e-2 / gamma for g in self.g):
                 new_data[i] = particle.data[i]
-            while self.g(new_data[i].unsqueeze(0)) > 0:
-                new_data[i] = 1/2 * new_data[i] + 1/2 * particle.data[i]
+            else:
+                j = 0
+                while any(g(new_data[i].unsqueeze(0)) > 0 for g in self.g):
+                    if j > self.iter:
+                        new_data[i] = particle.data[i]
+                        break
+                    new_data[i] = 1/2 * new_data[i] + 1/2 * particle.data[i]
+                    j += 1
         particle.data = new_data  ### negative sign for constraint SVGD
         return particle
 

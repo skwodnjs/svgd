@@ -11,8 +11,17 @@ from model.svgd_barrier import SVGD_Barrier
 def f(particles):
     return 1 / 2 * (particles[:, 0] ** 2 + particles[:, 1] ** 2)
 
-def g(particles):
+def g_0(particles):
+    return particles[:, 1]
+
+def g_1(particles):
     return - particles[:, 0] ** 2 + particles[:, 1] + 3
+
+def g_2(particles):
+    return - 2/3 * particles[:, 0] + 1 + particles[:, 1]
+
+def g_3(particles):
+    return particles[:, 1] + 1/8 * particles[:, 0] ** 2 - 3/8 * particles[:, 0] + 1/2 + 9/32
 
 def best_particle(particles):
     """
@@ -32,7 +41,7 @@ def best_particle(particles):
 
     return best_particle
 
-def main(x0, sampler, max_iter, save=False):
+def main(x0, g, sampler, max_iter, save=False):
     ## show
     bound_x = 10
     bound_y = 10
@@ -47,8 +56,8 @@ def main(x0, sampler, max_iter, save=False):
     ## init state plot
     p1 = plot_2d_contour(ax, f, xlim = [-bound_x, bound_x], ylim = [-bound_y, bound_y], gridsize = 100)
     p2, = ax.plot(x0[:,0], x0[:,1], '.', alpha=0.5, markersize=5, color='#e35f62', zorder=10)
-    p3 = plot_2d_contour(ax, g, xlim = [-bound_x, bound_x], ylim = [-bound_y, bound_y], gridsize = 100, zero=True)
-    artists.append([p1, p2, p3])
+    p3 = [plot_2d_contour(ax, g_i, xlim=[-bound_x, bound_x], ylim=[-bound_y, bound_y], gridsize=100, zero=True) for g_i in g]
+    artists.append([p1, p2] + p3)
 
     ## method
     x = x0
@@ -62,8 +71,8 @@ def main(x0, sampler, max_iter, save=False):
 
         p1 = plot_2d_contour(ax, f, xlim = [-bound_x, bound_x], ylim = [-bound_y, bound_y], gridsize = 100)
         p2, = ax.plot(x.detach()[:,0], x.detach()[:,1], '.', alpha=0.5, markersize=5, color='#e35f62', zorder=10)
-        p3 = plot_2d_contour(ax, g, xlim = [-bound_x, bound_x], ylim = [-bound_y, bound_y], gridsize = 100, zero=True)
-        artists.append([p1, p2, p3])
+        p3 = [plot_2d_contour(ax, g_i, xlim=[-bound_x, bound_x], ylim=[-bound_y, bound_y], gridsize=100, zero=True) for g_i in g]
+        artists.append([p1, p2] + p3)
 
         plot_time = time.time() - step_time - start
 
@@ -76,8 +85,8 @@ def main(x0, sampler, max_iter, save=False):
     best = best_particle(x)
     print(f'best particles: ({best[0]:.7f}, {best[1]:.7f})')
     print(f'f(x): { f(best[None, :])[0]:.7f}')
-    constraint = g(x) <= 0
-    print(f'constraint: {torch.all(constraint)} / g(x): {g(best[None, :])[0]:.7f}')
+    constraint = torch.all(torch.stack([g_i(x) <= 0 for g_i in g]), dim=0)
+    print(f'constraint: {torch.all(constraint)} / g(x): {g_1(best[None, :])[0]:.7f}')
 
     result = f'runtime: {total_time:.4f} sec  /  best particles: ( {best[0]:.4f}, {best[1]:.4f} )  /  f(x): { - f(best[None, :])[0]:.7f} / constraint: {torch.all(constraint)}'
     plt.figtext(0.5, 0.01, result, ha="center", fontsize=10)
@@ -93,13 +102,20 @@ if __name__ == "__main__":
 
     torch.manual_seed(400)
 
-    x0 = torch.zeros(NUM_PARTICLES, dim, requires_grad=False)
-    x0[:,0] = torch.randn(NUM_PARTICLES, requires_grad=False) * 5
-    x0[:,1] = x0[:,0] + torch.randn(NUM_PARTICLES, requires_grad=False) + 1
-    x0[:, 1] = torch.where(g(x0) > 0, x0[:, 0] ** 2 - 5, x0[:, 1])
+    theta = torch.rand(NUM_PARTICLES) * 2 * torch.pi
+    r = torch.sqrt(torch.rand(NUM_PARTICLES)) * 2
+
+    x = r * torch.cos(theta) + 0
+    y = r * torch.sin(theta) - 7
+
+    x0 = torch.zeros(NUM_PARTICLES, 2)
+    x0[:, 0] = x
+    x0[:, 1] = y
+
+    g = [g_1, g_2, g_3]
 
     sampler = SVGD_Barrier(f, g, stepsize=0.5, alpha = 100)
     max_iter = 1000
 
-    save = False
-    main(x0, sampler, max_iter, save=save)
+    save = True
+    main(x0, g, sampler, max_iter, save=save)
