@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e998009-2be7-4d83-b846-2a4ed7e24337" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/svgd_barrier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_o_svgd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/animation/svgd_barrier.gif" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main_svgd.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_svgd.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_svgd_barrier.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_svgd_barrier.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/o_svgd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/svgd_barrier.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/svgd_barrier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +44,7 @@
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/JWN/OCP/SVGD/o-sgvd"
+    "last_opened_file_path": "C:/JWN/OCP/SVGD/svgd"
   }
 }]]></component>
   <component name="RecentsManager">

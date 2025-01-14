@@ -97,5 +97,5 @@ if __name__ == "__main__":
     sampler = SVGD(log_p, stepsize=0.5, alpha = 100)
     max_iter = 500
 
-    save = False
+    save = True
     main(x0, sampler, max_iter, save=save)

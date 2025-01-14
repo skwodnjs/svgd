@@ -5,18 +5,25 @@ import torch
 import torch.nn as nn
 
 class SVGD_Barrier(nn.Module):
-    def __init__(self, f, g, stepsize=1e-1, alpha = 20., M = 1000):
+    def __init__(self, f, g, stepsize=1e-1, alpha = 20., M = 1000, iter = 100):
         super(SVGD_Barrier, self).__init__()
         self.log_p = lambda particles: - f(particles)
         self.g = g
         self.stepsize = stepsize
         self.alpha = alpha
         self.M = M
+        self.iter = iter
 
     def step(self, particle, gamma):
         grad = self.svgd_get_gradient(lambda particles: self.log_p(particles) + gamma * torch.log(self.g(particles)), particle)
-        dx = grad.detach().clone() * self.stepsize * gamma
-        particle.data = particle.data +  torch.clip(dx, -self.M, self.M)  ### negative sign for constraint SVGD
+        dx = grad.detach().clone() * self.stepsize
+        new_data = particle.data + torch.clip(dx, -self.M * gamma, self.M * gamma)  ### negative sign for constraint SVGD
+        for i in range(len(new_data)):
+            if self.g(new_data[i].unsqueeze(0)) > - 0.01 / gamma or i > self.iter:
+                new_data[i] = particle.data[i]
+            while self.g(new_data[i].unsqueeze(0)) > 0:
+                new_data[i] = 1/2 * new_data[i] + 1/2 * particle.data[i]
+        particle.data = new_data  ### negative sign for constraint SVGD
         return particle
 
     def kernel(self, particles):
