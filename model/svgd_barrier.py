@@ -19,11 +19,11 @@ class SVGD_Barrier(nn.Module):
         dx = grad.detach().clone() * self.stepsize
         new_data = particle.data + torch.clip(dx, -self.M * gamma, self.M * gamma)  ### negative sign for constraint SVGD
         for i in range(len(new_data)):
-            if any(g(new_data[i].unsqueeze(0)) > -1e-2 / gamma for g in self.g):
+            if any(0 > g(new_data[i].unsqueeze(0)) > -1e-2 / gamma for g in self.g):
                 new_data[i] = particle.data[i]
             else:
                 j = 0
-                while any(g(new_data[i].unsqueeze(0)) > 0 for g in self.g):
+                while any(g(new_data[i].unsqueeze(0)) > -1e-2 / gamma for g in self.g):
                     if j > self.iter:
                         new_data[i] = particle.data[i]
                         break

@@ -100,7 +100,7 @@ if __name__ == "__main__":
     dim = 2
     NUM_PARTICLES = 50
 
-    torch.manual_seed(400)
+    torch.manual_seed(42)
 
     theta = torch.rand(NUM_PARTICLES) * 2 * torch.pi
     r = torch.sqrt(torch.rand(NUM_PARTICLES)) * 2
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     g = [g_1, g_2, g_3]
 
     sampler = SVGD_Barrier(f, g, stepsize=0.5, alpha = 100)
-    max_iter = 1000
+    max_iter = 250
 
     save = True
     main(x0, g, sampler, max_iter, save=save)
